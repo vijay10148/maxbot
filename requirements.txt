@@ -18,7 +18,7 @@ python3-xlib==0.15
 pyttsx3==2.90
 PyTweening==1.0.3
 pywhatkit==3.8
-pywin32==300
+pywin32==227
 requests==2.25.1
 rubicon-objc==0.4.0
 six==1.15.0
