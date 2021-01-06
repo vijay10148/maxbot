@@ -4,7 +4,9 @@ import pywhatkit
 import datetime
 import wikipedia
 import pyjokes
-
+import webbrowser
+from plyer import * 
+import psutil
 
 listener = sr.Recognizer()
 engine = pyttsx3.init()
@@ -23,14 +25,17 @@ def take_command():
     try:
         with sr.Microphone() as source:
             print('listening...')
-            voice = listener.listen(source)
+            voice = listener.listen(source, timeout=5.1)
+            
             command = listener.recognize_google(voice)
+            
             command = command.lower()
             if 'max' in command:
                 command = command.replace('max', '')
                 print(command)
-    except:
-        pass
+    
+    except :
+        print('Check your your mic connection(or)Check your network')    
     return command
 
 
@@ -55,12 +60,25 @@ def run_max():
         talk('I am in a relationship with wifi')
     elif 'joke' in command:
         talk(pyjokes.get_joke())
-    elif "no thanks max"  in command:
-        return quit()
+    elif "bye"  in command:
         talk("Thank u have a nice day")
+        return quit()
+        
+    elif "open facebook"  in command:
+        talk("Openning facebook in web browser") 
+        webbrowser.open("https://www.facebook.com")                
+    elif "battery status"  in command:
+       battery = psutil.sensors_battery()
+       plugged = battery.power_plugged
+       percent = str(battery.percent)
+
+       plugged = "U are Plugged In dont Worry" if plugged else "Not Plugged and to get best performance get plugged with power adapter"
+
+       talk(percent+'% | '+plugged )
     else:
         talk('Please say the command again.')
 
 
 while True:
     run_max()
+
